@@ -7,9 +7,9 @@ import {
     Key,
     Settings,
     LogOut,
-    ShieldCheck,
     ChevronUp,
     User2,
+    BookOpen,
 } from "lucide-react";
 import {
     Sidebar,
@@ -35,7 +35,8 @@ import { authClient } from "@/lib/auth-client";
 const NAV_ITEMS = [
     { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
     { name: "API Keys", href: "/dashboard/keys", icon: Key },
-    { name: "Project Setttings", href: "/dashboard/settings/project", icon: Settings },
+    { name: "API Docs", href: "/docs", icon: BookOpen },
+    { name: "Project Settings", href: "/dashboard/settings/project", icon: Settings },
     { name: "Members", href: "/dashboard/settings/project/members", icon: User2 },
 ];
 

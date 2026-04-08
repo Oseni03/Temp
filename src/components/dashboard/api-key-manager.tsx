@@ -7,8 +7,6 @@ import { Input } from "@/components/ui/input";
 import {
     Card,
     CardContent,
-    CardHeader,
-    CardTitle
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
@@ -94,7 +92,7 @@ export function ApiKeyManager({ initialKeys }: { initialKeys: ApiKey[] }) {
                     <h2 className="text-sm font-bold uppercase tracking-[0.2em] text-foreground">Generate Access Token</h2>
                     <p className="text-xs text-muted-foreground font-light mt-1">Create a new bearer token to authenticate your verification requests via the API.</p>
                 </div>
-                
+
                 <Card className="border border-border bg-background shadow-none rounded-xl">
                     <CardContent className="p-6">
                         <form onSubmit={handleCreateKey} className="flex flex-col sm:flex-row gap-4 items-end">
@@ -108,9 +106,9 @@ export function ApiKeyManager({ initialKeys }: { initialKeys: ApiKey[] }) {
                                     className="h-10 bg-muted/20 border-border focus:bg-background transition-all"
                                 />
                             </div>
-                            <Button 
-                                type="submit" 
-                                disabled={isCreating} 
+                            <Button
+                                type="submit"
+                                disabled={isCreating}
                                 className="w-full sm:w-auto h-10 px-6 font-semibold bg-primary text-primary-foreground hover:opacity-90 active:scale-[0.98] transition-all"
                             >
                                 {isCreating ? (
@@ -131,7 +129,7 @@ export function ApiKeyManager({ initialKeys }: { initialKeys: ApiKey[] }) {
                     <h2 className="text-sm font-bold uppercase tracking-[0.2em] text-foreground">Active Tokens</h2>
                     <span className="text-[10px] bg-muted/50 text-muted-foreground px-2 py-0.5 rounded-full font-mono uppercase border border-border/50">{keys.length} Total</span>
                 </div>
-                
+
                 {keys.length === 0 ? (
                     <div className="flex flex-col items-center justify-center py-20 border-2 border-dashed border-border/50 rounded-xl bg-muted/5">
                         <AlertCircle className="h-10 w-10 text-muted-foreground/10 mb-4 font-light" />
@@ -161,7 +159,7 @@ export function ApiKeyManager({ initialKeys }: { initialKeys: ApiKey[] }) {
                                                         {visibleKeys[apiKey.id] ? apiKey.key : "temp_••••••••••••••••••••••••"}
                                                     </code>
                                                 </div>
-                                                <div className="flex items-center gap-1 flex-shrink-0">
+                                                <div className="flex items-center gap-1 shrink-0">
                                                     <Button
                                                         size="icon"
                                                         variant="ghost"

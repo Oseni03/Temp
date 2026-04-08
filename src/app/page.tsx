@@ -15,7 +15,7 @@ export default function LandingPage() {
                         </div>
                         <nav className="hidden md:flex items-center gap-8">
                             <Link href="#features" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Features</Link>
-                            <Link href="#documentation" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Docs</Link>
+                            <Link href="/docs" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Docs</Link>
                             <Link href="#pricing" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Pricing</Link>
                         </nav>
                         <div className="flex items-center gap-4">
@@ -52,7 +52,7 @@ export default function LandingPage() {
                                 </Link>
                             </Button>
                             <Button asChild variant="outline" size="lg" className="rounded-lg px-8 h-12 text-base border-border">
-                                <Link href="#documentation">Explore the docs</Link>
+                                <Link href="/docs">Explore the docs</Link>
                             </Button>
                         </div>
                         <p className="text-sm text-muted-foreground">No credit card required. Up to 10k free requests.</p>
@@ -87,7 +87,7 @@ export default function LandingPage() {
                                 </div>
                             </div>
                             <div className="relative group">
-                                <div className="absolute -inset-1 bg-gradient-to-r from-border to-transparent blur opacity-25 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
+                                <div className="absolute -inset-1 bg-linear-to-r from-border to-transparent blur opacity-25 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
                                 <div className="relative bg-[#090909] border border-white/10 rounded-xl overflow-hidden shadow-2xl">
                                     <div className="flex items-center gap-2 px-4 py-3 bg-white/5 border-b border-white/5">
                                         <div className="flex gap-1.5">
