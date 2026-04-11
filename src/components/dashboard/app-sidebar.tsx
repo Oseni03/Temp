@@ -10,6 +10,7 @@ import {
     ChevronUp,
     User2,
     BookOpen,
+    CreditCard,
 } from "lucide-react";
 import {
     Sidebar,
@@ -38,6 +39,7 @@ const NAV_ITEMS = [
     { name: "API Docs", href: "/docs", icon: BookOpen },
     { name: "Project Settings", href: "/dashboard/settings/project", icon: Settings },
     { name: "Members", href: "/dashboard/settings/project/members", icon: User2 },
+    { name: "Billing", href: "/dashboard/settings/project/billing", icon: CreditCard },
 ];
 
 
