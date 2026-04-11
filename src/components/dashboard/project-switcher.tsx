@@ -1,5 +1,6 @@
 "use client";
 
+import * as React from "react";
 import {
     ChevronDown,
     Plus,
@@ -22,11 +23,12 @@ import {
 } from "@/components/ui/sidebar";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
-
+import { CreateProjectDialog } from "./create-project-dialog";
 
 export function ProjectSwitcher() {
     const { isMobile } = useSidebar();
     const router = useRouter();
+    const [isCreateDialogOpen, setIsCreateDialogOpen] = React.useState(false);
 
     const { data: organizations, isPending } = authClient.useListOrganizations();
     const { data: activeOrg } = authClient.useActiveOrganization();
@@ -39,8 +41,7 @@ export function ProjectSwitcher() {
     };
 
     const handleCreateProject = () => {
-        // We'll implement a dialog for this later or redirect to a creation page
-        router.push("/dashboard/settings/project/new");
+        setIsCreateDialogOpen(true);
     };
 
     if (isPending) {
@@ -115,6 +116,10 @@ export function ProjectSwitcher() {
                     </DropdownMenuContent>
                 </DropdownMenu>
             </SidebarMenuItem>
+            <CreateProjectDialog 
+                open={isCreateDialogOpen} 
+                onOpenChange={setIsCreateDialogOpen} 
+            />
         </SidebarMenu>
     );
 }
