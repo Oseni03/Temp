@@ -15,7 +15,7 @@ import { prisma } from "@/lib/db";
 import { UsageStats } from "@/components/dashboard/usage-stats";
 
 async function getSummaryData(userId: string) {
-    const totalKeys = await prisma.apiKey.count({
+    const totalKeys = await prisma.apikey.count({
         where: { userId }
     });
 

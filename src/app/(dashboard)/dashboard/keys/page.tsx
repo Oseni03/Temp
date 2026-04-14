@@ -13,7 +13,7 @@ export default async function ApiKeysPage() {
         redirect("/sign-in");
     }
 
-    const apiKeys = await prisma.apiKey.findMany({
+    const apiKeys = await prisma.apikey.findMany({
         where: { userId: session.user.id },
         orderBy: { createdAt: "desc" },
     });

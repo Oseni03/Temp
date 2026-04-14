@@ -24,7 +24,7 @@ model User {
   sessions      Session[]
   accounts      Account[]
   
-  apiKeys       ApiKey[]
+  apiKeys       apikey[]
   members       Member[]
   invitations   Invitation[]
   
@@ -121,7 +121,7 @@ model Invitation {
 }
 
 // --- BetterAuth API Key Plugin Models ---
-model ApiKey {
+model apikey {
   id         String    @id @default(cuid())
   key        String
   prefix     String?
@@ -146,7 +146,7 @@ model UsageLog {
   isDisposable Boolean
   createdAt    DateTime @default(now())
   
-  apiKey       ApiKey   @relation(fields: [apiKeyId], references: [id], onDelete: Cascade)
+  apiKey       apikey   @relation(fields: [apiKeyId], references: [id], onDelete: Cascade)
 
   @@index([apiKeyId])
 }

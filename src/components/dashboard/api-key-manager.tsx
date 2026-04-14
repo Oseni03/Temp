@@ -20,16 +20,17 @@ import {
     Key,
     AlertCircle
 } from "lucide-react";
+import { createApiKey } from "@/server/apikey";
 
 interface ApiKey {
     id: string;
     key: string;
-    name?: string;
+    name: string | null;
     createdAt: Date;
 }
 
 export function ApiKeyManager({ initialKeys }: { initialKeys: ApiKey[] }) {
-    const { data: session } = authClient.useSession();
+    const { data: session, isPending: isSessionLoading } = authClient.useSession();
     const [keys, setKeys] = useState<ApiKey[]>(initialKeys);
     const [newKeyName, setNewKeyName] = useState("");
     const [isCreating, setIsCreating] = useState(false);
@@ -37,23 +38,33 @@ export function ApiKeyManager({ initialKeys }: { initialKeys: ApiKey[] }) {
 
     const handleCreateKey = async (e: React.FormEvent) => {
         e.preventDefault();
+
+        if (!session) {
+            toast.error("You must be signed in to create an API key");
+            return;
+        }
+
         setIsCreating(true);
 
         try {
-            const { data, error } = await authClient.apiKey.create({
-                name: newKeyName || `Key ${keys.length + 1}`,
-                userId: session?.user.id,
-                // organizationId: session?.session.activeOrganizationId,
-            });
-
-            if (error) throw error;
+            // We remove the explicit userId as Better Auth infers it from the session cookie.
+            // Explicitly passing it can sometimes trigger stricter server-side checks that cause UNAUTHORIZED_SESSION.
+            const data = await createApiKey(newKeyName || `Key ${keys.length + 1}`)
 
             if (data) {
-                setKeys([data as ApiKey, ...keys]);
+                // Better Auth 1.6 returns the key object. We map it to our ApiKey interface.
+                const newKey: ApiKey = {
+                    id: data.id,
+                    key: (data as any).key,
+                    name: data.name ?? null,
+                    createdAt: new Date(data.createdAt),
+                };
+                setKeys([newKey, ...keys]);
                 setNewKeyName("");
                 toast.success("API key generated successfully!");
             }
         } catch (error: any) {
+            console.error("API Key creation error:", error);
             toast.error(error.message || "Failed to create API key");
         } finally {
             setIsCreating(false);
@@ -111,10 +122,10 @@ export function ApiKeyManager({ initialKeys }: { initialKeys: ApiKey[] }) {
                             </div>
                             <Button
                                 type="submit"
-                                disabled={isCreating}
+                                disabled={isCreating || isSessionLoading || !session}
                                 className="w-full sm:w-auto h-10 px-6 font-semibold bg-primary text-primary-foreground hover:opacity-90 active:scale-[0.98] transition-all"
                             >
-                                {isCreating ? (
+                                {isCreating || isSessionLoading ? (
                                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                                 ) : (
                                     <Plus className="mr-2 h-4 w-4" />

@@ -33,7 +33,7 @@ export default function DashboardLayout({
         }
 
         fetchActiveOrg()
-    }, [data?.user])
+    }, [data?.user, activeOrganization, setActiveOrganization, getFullOrganization])
 
     if (!data?.user.id) return null
 
