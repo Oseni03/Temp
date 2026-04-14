@@ -23,10 +23,20 @@ import { useOrganization } from "@/contexts/organization-context";
 import { useRouter } from "next/navigation";
 
 export function MembersTable() {
-    const { activeOrganization: activeOrg, isLoadingActive: isPending, updateMemberRole, removeMember } = useOrganization()
+    const {
+        activeOrganization: activeOrg,
+        isLoadingActive,
+        updateMemberRole,
+        removeMember,
+        invitations,
+        isLoadingInvitations,
+        cancelInvitation
+    } = useOrganization()
     const members = activeOrg?.members;
     const { data: session } = authClient.useSession();
     const router = useRouter()
+
+    const isPending = isLoadingActive || isLoadingInvitations;
 
     const handleUpdateRole = async (memberId: string, role: string) => {
         try {
@@ -48,6 +58,16 @@ export function MembersTable() {
             router.refresh();
         } catch (_error) {
             toast.error("Failed to remove member");
+        }
+    };
+
+    const handleCancelInvitation = async (invitationId: string) => {
+        try {
+            await cancelInvitation(invitationId);
+            toast.success("Invitation cancelled");
+            router.refresh();
+        } catch (_error) {
+            toast.error("Failed to cancel invitation");
         }
     };
 
@@ -116,7 +136,47 @@ export function MembersTable() {
                             </TableCell>
                         </TableRow>
                     ))}
-                    {members?.length === 0 && (
+
+                    {invitations?.map((invitation) => (
+                        <TableRow key={invitation.id}>
+                            <TableCell className="font-medium italic">
+                                <div className="flex items-center gap-3">
+                                    <div className="h-8 w-8 rounded-full bg-accent/50 flex items-center justify-center opacity-70">
+                                        <User className="h-4 w-4 text-muted-foreground" />
+                                    </div>
+                                    <div className="flex flex-col">
+                                        <span className="text-muted-foreground">{invitation.email}</span>
+                                        <span className="text-xs text-muted-foreground/70 font-normal">Pending Invitation</span>
+                                    </div>
+                                </div>
+                            </TableCell>
+                            <TableCell>
+                                <Badge variant="outline" className="bg-yellow-500/10 text-yellow-600 border-yellow-500/20">
+                                    Pending
+                                </Badge>
+                            </TableCell>
+                            <TableCell className="text-right">
+                                <DropdownMenu>
+                                    <DropdownMenuTrigger asChild>
+                                        <Button variant="ghost" size="icon">
+                                            <MoreHorizontal className="h-4 w-4" />
+                                        </Button>
+                                    </DropdownMenuTrigger>
+                                    <DropdownMenuContent align="end">
+                                        <DropdownMenuItem
+                                            className="text-destructive focus:text-destructive"
+                                            onClick={() => handleCancelInvitation(invitation.id)}
+                                        >
+                                            <Trash2 className="mr-2 h-4 w-4" />
+                                            Cancel Invitation
+                                        </DropdownMenuItem>
+                                    </DropdownMenuContent>
+                                </DropdownMenu>
+                            </TableCell>
+                        </TableRow>
+                    ))}
+
+                    {(!members || members.length === 0) && (!invitations || invitations.length === 0) && (
                         <TableRow>
                             <TableCell colSpan={3} className="text-center h-24 text-muted-foreground">
                                 No members found.

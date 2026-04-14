@@ -26,6 +26,14 @@ export type ActiveOrganization = {
         createdAt: Date;
         user: { id: string; name: string; email: string; image?: string | null };
     }>;
+    invitations: Array<{
+        id: string;
+        email: string;
+        role: string;
+        status: string;
+        expiresAt: Date;
+        inviterId: string;
+    }>;
 };
 
 /** Shape of a member's own membership record in the active org. */
@@ -115,6 +123,14 @@ interface OrganizationContextValue {
 
     /** True if the current user is an admin or owner of the active organization. */
     isAdmin: boolean;
+
+    /** Current pending invitations. */
+    invitations: ActiveOrganization["invitations"];
+    /** True while invitations are being fetched. */
+    isLoadingInvitations: boolean;
+
+    /** Cancel a pending invitation. */
+    cancelInvitation: (invitationId: string) => Promise<void>;
 }
 
 // ---------------------------------------------------------------------------
@@ -137,12 +153,15 @@ export function OrganizationProvider({ children }: { children: ReactNode }) {
     const { data: rawMember, isPending: isLoadingMember } =
         authClient.useActiveMember();
 
+    const isLoadingInvitations = isLoadingActive
+
     const router = useRouter()
 
     // Cast to our typed shape (Better Auth merges additionalFields at runtime)
     const activeOrganization = rawActive as ActiveOrganization
     const activeMember = rawMember
     const organizations = rawList ?? []
+    const invitations = (rawActive?.invitations as ActiveOrganization["invitations"]) ?? [];
 
     // ── Derived values ────────────────────────────────────────────────────────
 
@@ -198,6 +217,10 @@ export function OrganizationProvider({ children }: { children: ReactNode }) {
         await authClient.organization.inviteMember({ email, role });
     };
 
+    const cancelInvitation = async (invitationId: string) => {
+        await authClient.organization.cancelInvitation({ invitationId });
+    };
+
     const removeMember = async (emailOrMemberId: string) => {
         await authClient.organization.removeMember({
             memberIdOrEmail: emailOrMemberId,
@@ -236,6 +259,9 @@ export function OrganizationProvider({ children }: { children: ReactNode }) {
             removeMember,
             updateMemberRole,
             hasPermission,
+            invitations,
+            isLoadingInvitations,
+            cancelInvitation,
             isOwner,
             isAdmin,
         }),
@@ -247,6 +273,8 @@ export function OrganizationProvider({ children }: { children: ReactNode }) {
             isLoadingList,
             activeMember,
             isLoadingMember,
+            invitations,
+            isLoadingInvitations,
             isOwner,
             isAdmin,
         ]
