@@ -39,8 +39,8 @@ export function ApiKeyManager({ initialKeys }: { initialKeys: ApiKey[] }) {
     const handleCreateKey = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        if (!session) {
-            toast.error("You must be signed in to create an API key");
+        if (!session || !session.session.activeOrganizationId) {
+            toast.error("You must be signed in with an active organization to create an API key");
             return;
         }
 
@@ -55,7 +55,7 @@ export function ApiKeyManager({ initialKeys }: { initialKeys: ApiKey[] }) {
                 // Better Auth 1.6 returns the key object. We map it to our ApiKey interface.
                 const newKey: ApiKey = {
                     id: data.id,
-                    key: (data as any).key,
+                    key: data.key,
                     name: data.name ?? null,
                     createdAt: new Date(data.createdAt),
                 };

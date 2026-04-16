@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { DocsPage } from "@/components/dashboard/docs-page";
 
 export const metadata: Metadata = {
-    title: "API Reference — Temp",
+    title: "API Reference — TempTrap",
     description:
-        "Complete reference for the Temp /v1/verify disposable email detection endpoint. Authentication, parameters, response shape, errors, and live playground.",
+        "Complete reference for the TempTrap /v1/verify disposable email detection endpoint. Authentication, parameters, response shape, errors, and live playground.",
 };
 
 export default function ApiDocsPage() {

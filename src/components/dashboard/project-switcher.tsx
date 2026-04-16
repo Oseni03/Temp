@@ -38,10 +38,10 @@ export function ProjectSwitcher() {
         return (
             <SidebarMenu>
                 <SidebarMenuItem>
-                    <SidebarMenuButton size="lg" className="w-full animate-pulse bg-accent/50 rounded-lg" disabled>
-                        <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-accent" />
+                    <SidebarMenuButton size="lg" className="w-full animate-pulse bg-muted/20 rounded-2xl" disabled>
+                        <div className="flex aspect-square size-10 items-center justify-center rounded-xl bg-muted/40" />
                         <div className="grid flex-1 text-left text-sm leading-tight">
-                            <div className="h-4 w-24 bg-accent-foreground/10 rounded" />
+                            <div className="h-4 w-24 bg-muted/40 rounded" />
                         </div>
                     </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -56,52 +56,56 @@ export function ProjectSwitcher() {
                     <DropdownMenuTrigger asChild>
                         <SidebarMenuButton
                             size="lg"
-                            className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+                            className="w-full h-14 flex items-center justify-between hover:bg-muted/50 border border-transparent hover:border-border/50 rounded-2xl transition-all duration-300 px-3 group"
                         >
-                            <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-muted text-muted-foreground border">
-                                <Box className="size-4" />
+                            <div className="flex items-center gap-3">
+                                <div className="flex aspect-square size-10 items-center justify-center rounded-xl bg-primary/10 text-primary border border-primary/20 group-hover:scale-105 transition-transform">
+                                    <Box className="size-5" />
+                                </div>
+                                <div className="grid flex-1 text-left text-sm leading-tight">
+                                    <span className="truncate font-bold text-foreground">
+                                        {activeOrg?.name || "Select Project"}
+                                    </span>
+                                    <span className="truncate text-[10px] text-muted-foreground font-bold uppercase tracking-widest">
+                                        Environment
+                                    </span>
+                                </div>
                             </div>
-                            <div className="grid flex-1 text-left text-sm leading-tight">
-                                <span className="truncate font-semibold">
-                                    {activeOrg?.name || "Select Project"}
-                                </span>
-                                <span className="truncate text-xs text-muted-foreground">
-                                    Project
-                                </span>
-                            </div>
-                            <ChevronDown className="ml-auto size-4" />
+                            <ChevronDown className="ml-auto size-4 text-muted-foreground/40 group-hover:text-muted-foreground" />
                         </SidebarMenuButton>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent
-                        className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
+                        className="w-[--radix-dropdown-menu-trigger-width] min-w-64 rounded-2xl p-2 bg-background/80 backdrop-blur-xl border-border/50 shadow-2xl animate-in fade-in zoom-in-95 duration-200"
                         align="start"
                         side={isMobile ? "bottom" : "right"}
-                        sideOffset={4}
+                        sideOffset={12}
                     >
-                        <DropdownMenuLabel className="text-xs text-muted-foreground">
-                            Projects
+                        <DropdownMenuLabel className="px-3 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground/40 border-b border-border/50 mb-2">
+                            Organizations
                         </DropdownMenuLabel>
                         {(organizations ?? []).map((org) => (
                             <DropdownMenuItem
                                 key={org.id}
                                 onClick={() => setActiveOrganization(org.id)}
-                                className="gap-2 p-2"
+                                className="flex items-center gap-3 px-3 py-2.5 cursor-pointer rounded-xl hover:bg-muted transition-all duration-150"
                             >
-                                <div className="flex size-6 items-center justify-center rounded-sm border">
+                                <div className={`flex size-8 items-center justify-center rounded-lg border ${activeOrg?.id === org.id ? 'bg-primary/10 border-primary/20 text-primary' : 'bg-muted/50 border-border/50 text-muted-foreground'}`}>
                                     <Box className="size-4 shrink-0" />
                                 </div>
-                                {org.name}
+                                <span className={`text-sm tracking-tight ${activeOrg?.id === org.id ? 'font-bold' : 'font-medium'}`}>
+                                    {org.name}
+                                </span>
                                 {activeOrg?.id === org.id && (
-                                    <Check className="ml-auto size-4" />
+                                    <Check className="ml-auto size-4 text-primary" />
                                 )}
                             </DropdownMenuItem>
                         ))}
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem className="gap-2 p-2" onClick={handleCreateProject}>
-                            <div className="flex size-6 items-center justify-center rounded-lg border bg-background">
+                        <DropdownMenuSeparator className="my-2 bg-border/50" />
+                        <DropdownMenuItem className="flex items-center gap-3 px-3 py-2.5 cursor-pointer rounded-xl hover:bg-primary/5 hover:text-primary transition-all duration-150 group" onClick={handleCreateProject}>
+                            <div className="flex size-8 items-center justify-center rounded-lg border border-dashed border-border group-hover:border-primary/40 group-hover:bg-primary/10 transition-colors">
                                 <Plus className="size-4" />
                             </div>
-                            <div className="font-medium text-muted-foreground">Add Project</div>
+                            <div className="text-sm font-bold">New Organization</div>
                         </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>

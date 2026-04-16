@@ -1,129 +1,151 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { ShieldCheck, ArrowRight, Check, Search, Activity, Zap } from "lucide-react";
+import { ArrowRight, Check, Search, Activity, Zap } from "lucide-react";
+import { Header } from "@/components/header";
+import { Footer } from "@/components/footer";
 
-export default function LandingPage() {
+export default async function LandingPage() {
     return (
-        <div className="flex flex-col min-h-screen bg-background text-foreground antialiased selection:bg-primary/10">
-            {/* Navbar */}
-            <header className="sticky top-0 z-50 w-full border-b border-border bg-background/80 backdrop-blur-md">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex h-16 items-center justify-between">
-                        <div className="flex items-center gap-2">
-                            <ShieldCheck className="h-6 w-6 text-foreground" />
-                            <span className="text-xl font-bold tracking-tight font-heading">Temp</span>
-                        </div>
-                        <nav className="hidden md:flex items-center gap-8">
-                            <Link href="#features" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Features</Link>
-                            <Link href="/docs" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Docs</Link>
-                            <Link href="#pricing" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Pricing</Link>
-                        </nav>
-                        <div className="flex items-center gap-4">
-                            <Link href="/sign-in" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
-                                Sign in
-                            </Link>
-                            <Button asChild size="sm" className="rounded-lg px-5">
-                                <Link href="/sign-up">Get started</Link>
-                            </Button>
-                        </div>
-                    </div>
-                </div>
-            </header>
+        <div className="flex flex-col min-h-screen bg-background text-foreground antialiased selection:bg-primary/10 font-sans">
+            <Header />
 
             <main className="flex-1">
                 {/* Hero Section */}
-                <section className="relative pt-24 pb-20 md:pt-32 md:pb-28 overflow-hidden">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-lg border border-border bg-muted/50 text-xs font-bold uppercase tracking-widest text-foreground mb-8">
-                            <Zap className="h-3 w-3" />
-                            Reliable Verification API
+                <section className="relative pt-24 pb-20 md:pt-32 md:pb-32 overflow-hidden flex flex-col items-center">
+                    {/* Background Glow */}
+                    <div className="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 w-full max-w-7xl aspect-video bg-primary/20 blur-[120px] rounded-full opacity-20 pointer-events-none" />
+
+                    <div className="max-w-7xl mx-auto px-6 text-center relative z-10">
+                        <div className="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-full border border-border/50 bg-muted/30 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground mb-10 animate-in-fade">
+                            <div className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
+                            Reliable Verification Infrastructure
                         </div>
-                        <h1 className="text-5xl md:text-7xl font-bold tracking-tight font-heading mb-8 max-w-4xl mx-auto">
-                            Stop fake signups <br />
+
+                        <h1 className="text-5xl md:text-8xl font-bold tracking-tight mb-8 max-w-5xl mx-auto leading-[0.9] text-gradient">
+                            Stop fake signups <br className="hidden md:block" />
                             at the threshold.
                         </h1>
-                        <p className="text-lg md:text-xl text-foreground font-medium max-w-2xl mx-auto mb-10 leading-relaxed">
-                            A fast, developer-first API to identify and block disposable email addresses. Improve lead quality and reduce fraud instantly.
+
+                        <p className="text-lg md:text-2xl text-muted-foreground max-w-2xl mx-auto mb-12 leading-relaxed font-light animate-in-slide-up">
+                            The fastest, developer-first API to identify fraud and disposable email addresses in real-time. Reach your real users, instantly.
                         </p>
-                        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-6">
-                            <Button asChild size="lg" className="rounded-lg px-8 h-12 text-base">
+
+                        <div className="flex flex-col sm:flex-row gap-5 justify-center items-center mb-16 animate-in-slide-up">
+                            <Button asChild size="lg" className="rounded-full px-10 h-14 text-base font-semibold shadow-2xl shadow-primary/20">
                                 <Link href="/sign-up">
-                                    Start verifying free <ArrowRight className="ml-2 h-4 w-4" />
+                                    Start verifying free <ArrowRight className="ml-2 h-5 w-5" />
                                 </Link>
                             </Button>
-                            <Button asChild variant="outline" size="lg" className="rounded-lg px-8 h-12 text-base border-border">
-                                <Link href="/docs">Explore the docs</Link>
+                            <Button asChild variant="outline" size="lg" className="rounded-full px-10 h-14 text-base border-border/50 hover:bg-muted/30 transition-all">
+                                <Link href="/docs">View documentation</Link>
                             </Button>
                         </div>
-                        <p className="text-sm text-muted-foreground">No credit card required. Up to 10k free requests.</p>
+
+                        {/* Social Proof Intro */}
+                        <div className="pt-10 border-t border-border/30 w-full animate-in-fade">
+                            <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-muted-foreground/60 mb-8">
+                                Trusted by developers at
+                            </p>
+                            <div className="flex flex-wrap justify-center items-center gap-x-12 gap-y-8 opacity-40 grayscale contrast-125">
+                                {/* Placeholders for logos */}
+                                <div className="text-2xl font-black italic tracking-tighter">VERCEL</div>
+                                <div className="text-2xl font-black italic tracking-tighter">STRIPE</div>
+                                <div className="text-2xl font-black italic tracking-tighter">GITHUB</div>
+                                <div className="text-2xl font-black italic tracking-tighter">LINEAR</div>
+                                <div className="text-2xl font-black italic tracking-tighter">SUPABASE</div>
+                            </div>
+                        </div>
                     </div>
                 </section>
 
-                {/* Integration Section */}
-                <section id="documentation" className="py-20 bg-muted/30 border-y border-border">
-                    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div className="grid md:grid-cols-2 gap-12 items-center">
-                            <div className="space-y-8">
-                                <div className="space-y-4">
-                                    <h2 className="text-3xl font-bold font-heading tracking-tight">Built for modern flows</h2>
-                                    <p className="text-muted-foreground leading-relaxed">
-                                        Integrate disposable email detection into your signup forms, API endpoints, or webhooks with a single request.
+                {/* Features Section - Bento Grid */}
+                <section id="features" className="py-24 md:py-40 relative">
+                    <div className="max-w-7xl mx-auto px-6">
+                        <div className="flex flex-col md:flex-row justify-between items-end gap-10 mb-20 animate-in-fade">
+                            <div className="max-w-2xl">
+                                <h2 className="text-4xl md:text-6xl font-bold tracking-tight mb-6">Designed for scale.</h2>
+                                <p className="text-lg text-muted-foreground leading-relaxed font-light">
+                                    We handle the complex domain intelligence so you can focus on building your product with high-quality user data.
+                                </p>
+                            </div>
+                            <Link href="/docs" className="group flex items-center gap-2 text-sm font-semibold hover:text-primary transition-colors">
+                                Explore full capabilities <div className="h-0.5 w-4 bg-primary group-hover:w-6 transition-all" />
+                            </Link>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 auto-rows-[300px] md:auto-rows-[350px]">
+                            {/* Big Feature: Domain Intelligence */}
+                            <div className="md:col-span-8 md:row-span-2 bento-card flex flex-col justify-end group">
+                                <div className="absolute top-0 right-0 p-10 opacity-10 group-hover:opacity-20 transition-opacity">
+                                    <Search className="h-48 w-48 text-primary" />
+                                </div>
+                                <div className="relative z-10 max-w-lg">
+                                    <div className="h-12 w-12 rounded-2xl bg-primary/10 flex items-center justify-center mb-8 border border-primary/20">
+                                        <Search className="h-6 w-6 text-primary" />
+                                    </div>
+                                    <h3 className="text-3xl font-bold mb-4 tracking-tight">Domain Intelligence</h3>
+                                    <p className="text-muted-foreground font-light leading-relaxed">
+                                        Our proprietary algorithms monitor millions of domain registrations hourly. We detect even the most obscure throwaway email providers before they hit your database.
                                     </p>
                                 </div>
-                                <div className="space-y-6">
-                                    {[
-                                        "REST API compatible with any stack",
-                                        "99.99% uptime with global edge nodes",
-                                        "Database updated every 15 minutes",
-                                        "Detailed verification metadata"
-                                    ].map((item) => (
-                                        <div key={item} className="flex items-center gap-3">
-                                            <div className="h-5 w-5 rounded-lg border border-border flex items-center justify-center bg-background">
-                                                <Check className="h-3 w-3 text-foreground" />
-                                            </div>
-                                            <span className="text-sm font-medium text-foreground">{item}</span>
-                                        </div>
-                                    ))}
-                                </div>
                             </div>
-                            <div className="relative group">
-                                <div className="absolute -inset-1 bg-linear-to-r from-border to-transparent blur opacity-25 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
-                                <div className="relative bg-[#090909] border border-white/10 rounded-xl overflow-hidden shadow-2xl">
-                                    <div className="flex items-center gap-2 px-4 py-3 bg-white/5 border-b border-white/5">
-                                        <div className="flex gap-1.5">
-                                            <div className="h-2.5 w-2.5 rounded-full bg-white/10" />
-                                            <div className="h-2.5 w-2.5 rounded-full bg-white/10" />
-                                            <div className="h-2.5 w-2.5 rounded-full bg-white/10" />
-                                        </div>
-                                        <span className="text-[10px] font-mono text-white/30 uppercase tracking-widest ml-2">Request Example</span>
-                                    </div>
-                                    <div className="p-6 font-mono text-sm leading-relaxed overflow-x-auto">
-                                        <div className="flex space-x-2">
-                                            <span className="text-blue-400">curl</span>
-                                            <span className="text-white/60">-X</span>
-                                            <span className="text-white">GET</span>
-                                        </div>
-                                        <div className="mt-2 text-white/80">
-                                            &quot;https://api.temp.sh/v1/verify&quot; \
-                                        </div>
-                                        <div className="mt-1 text-white/80">
-                                            <span className="text-white/40">-H</span> &quot;Authorization: Bearer YOUR_KEY&quot; \
-                                        </div>
-                                        <div className="mt-1 text-white/80">
-                                            <span className="text-white/40">-d</span> &quot;email=user@disposable.com&quot;
-                                        </div>
 
-                                        <div className="mt-6 border-t border-white/5 pt-6">
-                                            <div className="text-[10px] font-mono text-white/30 uppercase tracking-widest mb-3">Response</div>
-                                            <div className="text-green-400/90 whitespace-pre">
-                                                {`{
-  "email": "user@disposable.com",
-  "disposable": true,
-  "domain": "disposable.com",
-  "confidence": 1.0
-}`}
-                                            </div>
+                            {/* Feature: Speed */}
+                            <div className="md:col-span-4 bento-card group">
+                                <div className="h-10 w-10 rounded-xl bg-orange-500/10 flex items-center justify-center mb-6 border border-orange-500/20">
+                                    <Activity className="h-5 w-5 text-orange-500" />
+                                </div>
+                                <h3 className="text-xl font-bold mb-3 tracking-tight">Edge Performance</h3>
+                                <p className="text-sm text-muted-foreground font-light leading-relaxed">
+                                    A globally distributed network ensures sub-50ms latency for every verification request, anywhere on earth.
+                                </p>
+                            </div>
+
+                            {/* Feature: Data Quality */}
+                            <div className="md:col-span-4 bento-card group">
+                                <div className="h-10 w-10 rounded-xl bg-blue-500/10 flex items-center justify-center mb-6 border border-blue-500/20">
+                                    <Zap className="h-5 w-5 text-blue-500" />
+                                </div>
+                                <h3 className="text-xl font-bold mb-3 tracking-tight">Clean Pipelines</h3>
+                                <p className="text-sm text-muted-foreground font-light leading-relaxed">
+                                    Reduce marketing spend and improve engagement by ensuring your database only contains verified, high-intent users.
+                                </p>
+                            </div>
+
+                            {/* Integration Preview */}
+                            <div className="md:col-span-12 md:row-span-2 bento-card flex flex-col md:flex-row gap-12 items-center bg-foreground text-background">
+                                <div className="flex-1 space-y-6">
+                                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 text-[10px] font-bold uppercase tracking-widest text-white">
+                                        REST API
+                                    </div>
+                                    <h3 className="text-3xl font-bold tracking-tight">Integrate in seconds</h3>
+                                    <p className="text-white/60 font-light leading-relaxed max-w-md">
+                                        Integrate disposable email detection into your signup forms, API endpoints, or webhooks with a single request.
+                                    </p>
+                                    <div className="flex items-center gap-4 pt-4">
+                                        <div className="flex -space-x-3">
+                                            {[1, 2, 3, 4].map(i => (
+                                                <div key={i} className="h-8 w-8 rounded-full border-2 border-foreground bg-white/10" />
+                                            ))}
                                         </div>
+                                        <span className="text-xs font-medium text-white/40 italic">+ 2.4k developers recently joined</span>
+                                    </div>
+                                </div>
+                                <div className="w-full md:w-1/2 relative">
+                                    <div className="bg-[#090909] border border-white/5 rounded-2xl overflow-hidden shadow-2xl">
+                                        <div className="flex items-center gap-2 px-5 py-4 bg-white/[0.03] border-b border-white/5">
+                                            <div className="flex gap-1.5">
+                                                <div className="h-2 w-2 rounded-full bg-white/10" />
+                                                <div className="h-2 w-2 rounded-full bg-white/10" />
+                                                <div className="h-2 w-2 rounded-full bg-white/10" />
+                                            </div>
+                                            <span className="text-[9px] font-mono text-white/20 uppercase tracking-[0.2em] ml-3">request.sh</span>
+                                        </div>
+                                        <pre className="p-8 font-mono text-sm leading-relaxed overflow-x-auto text-white/80">
+                                            <code>{`curl -X GET "https://api.temp.sh/v1/verify" \\
+  -H "Authorization: Bearer KEY" \\
+  -d "email=user@temp.io"`}</code>
+                                        </pre>
                                     </div>
                                 </div>
                             </div>
@@ -131,114 +153,113 @@ export default function LandingPage() {
                     </div>
                 </section>
 
-                {/* Features Section */}
-                <section id="features" className="py-24 md:py-32">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div className="text-center mb-20">
-                            <h2 className="text-4xl font-bold font-heading mb-6 tracking-tight">Focus on what matters</h2>
-                            <p className="text-muted-foreground max-w-2xl mx-auto text-lg leading-relaxed">
-                                We handle the complex domain intelligence so you can focus on building your product with high-quality user data.
+                {/* Pricing Section */}
+                <section id="pricing" className="py-24 md:py-40">
+                    <div className="max-w-7xl mx-auto px-6 text-center">
+                        <div className="max-w-3xl mx-auto mb-20 animate-in-fade">
+                            <h2 className="text-4xl md:text-6xl font-bold tracking-tight mb-8 text-gradient">Simple, transparent scale.</h2>
+                            <p className="text-lg text-muted-foreground font-light leading-relaxed">
+                                No complex tiers or hidden restrictions. Simple usage-based pricing that grows as your business scales.
                             </p>
                         </div>
-                        <div className="grid md:grid-cols-3 gap-12">
+
+                        <div className="grid md:grid-cols-3 gap-8 text-left h-full">
                             {[
                                 {
-                                    title: "Domain Intelligence",
-                                    description: "Proprietary algorithms that detect even the most obscure throwaway email providers in real-time.",
-                                    icon: Search
+                                    name: "Developer",
+                                    price: "0",
+                                    desc: "Perfect for hobby projects",
+                                    features: ["1,000 monthly checks", "Standard detection", "API Access", "Community Support"]
                                 },
                                 {
-                                    title: "Performance First",
-                                    description: "A全球distributed network ensures sub-50ms latency for every verification request.",
-                                    icon: Activity
+                                    name: "Pro",
+                                    price: "49",
+                                    desc: "For growing production apps",
+                                    features: ["50,000 monthly checks", "Advanced Intelligence", "Priority Support", "Detailed Metadata"],
+                                    popular: true
                                 },
                                 {
-                                    title: "Clean Data",
-                                    description: "Reduce marketing spend and improve engagement by ensuring your database only contains real users.",
-                                    icon: Zap
+                                    name: "Enterprise",
+                                    price: "Custom",
+                                    desc: "Unlimited scale for teams",
+                                    features: ["Unlimited monthly checks", "Custom SLAs", "Dedicated Account Manager", "On-premise Options"]
                                 }
-                            ].map((feature) => (
-                                <div key={feature.title} className="group p-8 rounded-xl border border-border bg-background hover:bg-muted/30 transition-all duration-300">
-                                    <div className="h-12 w-12 rounded-lg border border-border flex items-center justify-center mb-6 bg-muted/50 text-foreground group-hover:scale-110 transition-transform duration-300">
-                                        <feature.icon className="h-6 w-6" />
+                            ].map((plan) => (
+                                <div key={plan.name} className={`relative flex flex-col p-8 rounded-3xl border ${plan.popular ? 'border-primary ring-1 ring-primary/20 bg-primary/[0.02]' : 'border-border/50 bg-background/50 hover:border-primary/20'} transition-all group`}>
+                                    {plan.popular && (
+                                        <div className="absolute top-0 right-8 -translate-y-1/2 px-3 py-1 rounded-full bg-primary text-[10px] font-bold uppercase tracking-widest text-primary-foreground shadow-lg">
+                                            Most Popular
+                                        </div>
+                                    )}
+                                    <div className="mb-8">
+                                        <h3 className="text-xl font-bold mb-2">{plan.name}</h3>
+                                        <p className="text-sm text-muted-foreground font-light">{plan.desc}</p>
                                     </div>
-                                    <h3 className="text-xl font-bold mb-3 tracking-tight">{feature.title}</h3>
-                                    <p className="text-muted-foreground text-sm leading-relaxed">{feature.description}</p>
+                                    <div className="mb-8 flex items-baseline gap-1">
+                                        <span className="text-4xl font-bold tracking-tight">{plan.price === "Custom" ? "" : "$"}</span>
+                                        <span className="text-5xl font-bold tracking-tight">{plan.price}</span>
+                                        {plan.price !== "Custom" && <span className="text-muted-foreground font-light">/mo</span>}
+                                    </div>
+                                    <ul className="space-y-4 mb-10 flex-1">
+                                        {plan.features.map(f => (
+                                            <li key={f} className="flex items-center gap-3 text-sm font-light">
+                                                <div className="h-5 w-5 rounded-full bg-primary/10 flex items-center justify-center border border-primary/20">
+                                                    <Check className="h-3 w-3 text-primary" />
+                                                </div>
+                                                {f}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                    <Button asChild variant={plan.popular ? "default" : "outline"} className="w-full h-12 rounded-full font-bold shadow-lg">
+                                        <Link href="/sign-up">{plan.price === "Custom" ? "Contact sales" : "Get started"}</Link>
+                                    </Button>
                                 </div>
                             ))}
                         </div>
                     </div>
                 </section>
 
-                {/* Pricing Section - simplified for landing page */}
-                <section id="pricing" className="py-24 bg-foreground text-background rounded-t-[3rem] -mt-10 overflow-hidden relative">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                        <h2 className="text-4xl md:text-5xl font-bold font-heading mb-8 tracking-tight">Scale without limits</h2>
-                        <p className="text-background/70 max-w-xl mx-auto mb-12 text-lg">
-                            Simple usage-based pricing that grows with your business. No hidden fees or tiered restrictions.
-                        </p>
-                        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                            <Button asChild size="lg" variant="secondary" className="rounded-lg px-8 h-12 text-base font-semibold">
-                                <Link href="/sign-up">Create free account</Link>
-                            </Button>
-                            <Link href="#documentation" className="text-sm font-medium hover:text-background/80 transition-colors border-b border-background/20 pb-0.5">
-                                View full pricing
-                            </Link>
+                {/* FAQ Section */}
+                <section className="py-24 md:py-40 bg-muted/20 border-y border-border/50">
+                    <div className="max-w-4xl mx-auto px-6">
+                        <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-16 text-center">Frequently asked questions</h2>
+                        <div className="space-y-4">
+                            {[
+                                { q: "How fast is the verification API?", a: "Extremely. Our global edge network ensures a sub-50ms response time for 99% of requests." },
+                                { q: "How often is the database updated?", a: "Every 15 minutes. We monitor domain registrations and throwaway providers around the clock." },
+                                { q: "Is there a free trial?", a: "Yes, every developer account starts with 1,000 free monthly verifications. No credit card required." },
+                                { q: "Do you offer bulk enterprise rates?", a: "We do. For high-volume users requiring custom SLAs or on-premise solutions, please contact our enterprise team." }
+                            ].map((item, i) => (
+                                // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+                                <div key={i} className="p-8 rounded-2xl border border-border/50 bg-background/50 group hover:border-primary/20 transition-all">
+                                    <h3 className="text-lg font-bold mb-4 flex items-center justify-between">
+                                        {item.q}
+                                    </h3>
+                                    <p className="text-muted-foreground font-light leading-relaxed">
+                                        {item.a}
+                                    </p>
+                                </div>
+                            ))}
                         </div>
+                    </div>
+                </section>
+
+                {/* Final CTA */}
+                <section className="py-32 md:py-48 relative overflow-hidden text-center bg-foreground text-background">
+                    <div className="absolute inset-0 bg-primary/10 blur-[120px] rounded-full translate-y-1/2 pointer-events-none" />
+                    <div className="max-w-4xl mx-auto px-6 relative z-10">
+                        <h2 className="text-5xl md:text-8xl font-bold tracking-tight mb-12 leading-[0.9]">Ready to clean <br /> your database?</h2>
+                        <div className="flex flex-col sm:flex-row gap-5 justify-center items-center">
+                            <Button asChild size="lg" variant="secondary" className="rounded-full px-12 h-16 text-lg font-bold shadow-2xl">
+                                <Link href="/sign-up">Create your free account</Link>
+                            </Button>
+                        </div>
+                        <p className="mt-10 text-background/40 font-mono text-[10px] uppercase tracking-[0.3em]">No credit card required &bull; 1k free monthly checks</p>
                     </div>
                 </section>
             </main>
 
-            {/* Footer */}
-            <footer className="bg-background py-16 border-t border-border">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex flex-col md:flex-row justify-between items-start gap-12">
-                        <div className="space-y-6">
-                            <div className="flex items-center gap-2">
-                                <ShieldCheck className="h-6 w-6 text-foreground" />
-                                <span className="text-xl font-bold tracking-tight font-heading">Temp</span>
-                            </div>
-                            <p className="text-sm text-muted-foreground max-w-xs leading-relaxed">
-                                Providing the infrastructure for secure and high-quality user experiences through domain intelligence.
-                            </p>
-                        </div>
-                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-12">
-                            <div className="space-y-4">
-                                <h4 className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Product</h4>
-                                <ul className="space-y-2 text-sm">
-                                    <li><Link href="#features" className="text-muted-foreground hover:text-foreground transition-colors">Features</Link></li>
-                                    <li><Link href="#documentation" className="text-muted-foreground hover:text-foreground transition-colors">API Reference</Link></li>
-                                    <li><Link href="#pricing" className="text-muted-foreground hover:text-foreground transition-colors">Pricing</Link></li>
-                                </ul>
-                            </div>
-                            <div className="space-y-4">
-                                <h4 className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Company</h4>
-                                <ul className="space-y-2 text-sm">
-                                    <li><Link href="#" className="text-muted-foreground hover:text-foreground transition-colors">About</Link></li>
-                                    <li><Link href="#" className="text-muted-foreground hover:text-foreground transition-colors">Privacy</Link></li>
-                                    <li><Link href="#" className="text-muted-foreground hover:text-foreground transition-colors">Terms</Link></li>
-                                </ul>
-                            </div>
-                            <div className="space-y-4">
-                                <h4 className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Social</h4>
-                                <ul className="space-y-2 text-sm">
-                                    <li><Link href="#" className="text-muted-foreground hover:text-foreground transition-colors">X (Twitter)</Link></li>
-                                    <li><Link href="#" className="text-muted-foreground hover:text-foreground transition-colors">GitHub</Link></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="mt-16 pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-6">
-                        <p className="text-xs text-muted-foreground">
-                            &copy; {new Date().getFullYear()} Temp. Built for founders by Oseni.
-                        </p>
-                        <div className="flex gap-4">
-                            <div className="h-1.5 w-1.5 rounded-full bg-green-500 animate-pulse" />
-                            <span className="text-xs text-muted-foreground font-medium uppercase tracking-tighter">System Operational</span>
-                        </div>
-                    </div>
-                </div>
-            </footer>
-        </div>
+            <Footer />
+        </div >
     );
 }

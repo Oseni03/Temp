@@ -36,11 +36,11 @@ import { ProjectSwitcher } from "@/components/dashboard/project-switcher";
 import { authClient } from "@/lib/auth-client";
 
 const NAV_ITEMS = [
-    { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
+    { name: "Overview", href: "/dashboard", icon: LayoutDashboard },
     { name: "API Keys", href: "/dashboard/keys", icon: Key },
     { name: "API Docs", href: "/docs", icon: BookOpen },
     { name: "Settings", href: "/dashboard/settings/project", icon: Settings },
-    { name: "Members", href: "/dashboard/settings/project/members", icon: User2 },
+    { name: "Team", href: "/dashboard/settings/project/members", icon: User2 },
     { name: "Upgrade", href: "#upgrade", icon: Sparkles, isSurvey: true },
 ];
 
@@ -58,20 +58,20 @@ export function AppSidebar() {
     };
 
     return (
-        <Sidebar className="border-r border-border bg-background">
-            <SidebarHeader className="h-14 border-b border-border flex items-center px-4">
+        <Sidebar className="border-r border-border/50 bg-background/50 backdrop-blur-xl">
+            <SidebarHeader className="h-16 border-b border-border/50 flex items-center px-6">
                 <ProjectSwitcher />
             </SidebarHeader>
 
-            <SidebarContent className="px-3 py-4">
+            <SidebarContent className="px-4 py-8">
                 <SidebarGroup>
-                    <SidebarGroupLabel className="px-3 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-foreground">
-                        Overview
+                    <SidebarGroupLabel className="px-2 py-3 text-[10px] font-bold uppercase tracking-[0.3em] text-muted-foreground/60">
+                        Platform
                     </SidebarGroupLabel>
-                    <SidebarGroupContent className="mt-1">
-                        <SidebarMenu className="gap-1">
+                    <SidebarGroupContent className="mt-2">
+                        <SidebarMenu className="gap-2">
                             {NAV_ITEMS.map((item) => {
-                                const isActive = pathname === item.href;
+                                const isActive = pathname === item.href || (item.href !== "/dashboard" && pathname.startsWith(item.href));
                                 const isSurvey = (item as any).isSurvey;
                                 
                                 return (
@@ -82,25 +82,26 @@ export function AppSidebar() {
                                             tooltip={item.name}
                                             onClick={isSurvey ? () => setSurveyOpen(true) : undefined}
                                             className={`
-                                                relative flex items-center gap-3 px-3 py-2 rounded-md transition-all duration-200
+                                                relative flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200
                                                 ${isActive
-                                                    ? "bg-primary/5 text-primary font-medium"
+                                                    ? "bg-primary/10 text-primary font-semibold shadow-sm"
                                                     : "text-muted-foreground hover:text-foreground hover:bg-muted/50"}
                                                 ${isSurvey ? "cursor-pointer" : ""}
                                             `}
                                         >
                                             {isSurvey ? (
                                                 <div className="flex items-center gap-3 w-full">
-                                                    <item.icon className="h-4 w-4 text-primary" />
-                                                    <span className="text-sm tracking-tight font-medium text-primary">{item.name}</span>
+                                                    <div className={`h-8 w-8 rounded-lg flex items-center justify-center transition-colors ${isActive ? "bg-primary/20" : "bg-muted/50 group-hover:bg-muted"}`}>
+                                                        <item.icon className="h-4 w-4 text-primary" />
+                                                    </div>
+                                                    <span className="text-sm tracking-tight font-semibold text-primary">{item.name}</span>
                                                 </div>
                                             ) : (
-                                                <Link href={item.href}>
-                                                    <item.icon className={`h-4 w-4 ${isActive ? "text-primary" : "text-muted-foreground"}`} />
+                                                <Link href={item.href} className="flex items-center gap-3 w-full">
+                                                    <div className={`h-8 w-8 rounded-lg flex items-center justify-center transition-colors ${isActive ? "bg-primary/20 text-primary" : "bg-muted/50 text-muted-foreground group-hover:bg-muted group-hover:text-foreground"}`}>
+                                                        <item.icon className="h-4 w-4" />
+                                                    </div>
                                                     <span className="text-sm tracking-tight">{item.name}</span>
-                                                    {isActive && (
-                                                        <div className="absolute right-2 h-1 w-1 rounded-full bg-primary" />
-                                                    )}
                                                 </Link>
                                             )}
                                         </SidebarMenuButton>
@@ -112,48 +113,48 @@ export function AppSidebar() {
                 </SidebarGroup>
             </SidebarContent>
 
-            <SidebarFooter className="border-t border-border p-4 bg-muted/20">
+            <SidebarFooter className="border-t border-border/50 p-6 bg-muted/[0.02]">
                 <SidebarMenu>
                     <SidebarMenuItem>
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
-                                <SidebarMenuButton className="w-full h-12 flex items-center justify-between hover:bg-background border border-transparent hover:border-border rounded-lg transition-all duration-200 px-3">
-                                    <div className="flex items-center gap-3">
-                                        <div className="h-8 w-8 rounded-md bg-background flex items-center justify-center border border-border">
-                                            <User2 className="h-4 w-4 text-muted-foreground font-light" />
+                                <SidebarMenuButton className="w-full h-14 flex items-center justify-between hover:bg-muted/50 border border-transparent hover:border-border/50 rounded-2xl transition-all duration-300 px-4 group">
+                                    <div className="flex items-center gap-4">
+                                        <div className="h-9 w-9 rounded-xl bg-muted/50 flex items-center justify-center border border-border/50 group-hover:scale-105 transition-transform">
+                                            <User2 className="h-5 w-5 text-muted-foreground/60" />
                                         </div>
                                         <div className="flex flex-col text-left overflow-hidden">
-                                            <span className="text-xs font-semibold truncate text-foreground">
+                                            <span className="text-xs font-bold truncate text-foreground group-hover:text-primary transition-colors">
                                                 {session?.user?.name || "User"}
                                             </span>
-                                            <span className="text-[10px] text-muted-foreground truncate tracking-tight">
+                                            <span className="text-[10px] text-muted-foreground/60 truncate tracking-tight font-medium">
                                                 {session?.user?.email || "user@example.com"}
                                             </span>
                                         </div>
                                     </div>
-                                    <ChevronUp className="h-3 w-3 text-muted-foreground" />
+                                    <ChevronUp className="h-3 w-3 text-muted-foreground/40 group-hover:text-muted-foreground transition-colors" />
                                 </SidebarMenuButton>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent
                                 side="right"
                                 align="end"
-                                className="w-56 mb-2 p-1 bg-background border border-border rounded-xl shadow-none z-50 animate-in fade-in zoom-in-95 duration-200"
+                                className="w-64 mb-4 p-2 bg-background/80 backdrop-blur-xl border border-border/50 rounded-2xl shadow-2xl z-50 animate-in fade-in zoom-in-95 duration-200"
                             >
-                                <div className="px-2 py-1.5 text-[10px] font-bold uppercase tracking-widest text-foreground border-b border-border/50 mb-1">
-                                    Account
+                                <div className="px-3 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground/40 border-b border-border/50 mb-2">
+                                    Account Settings
                                 </div>
                                 <DropdownMenuItem asChild>
-                                    <Link href="/dashboard/settings" className="flex items-center gap-2 px-3 py-2 cursor-pointer rounded-lg hover:bg-muted transition-colors duration-150">
+                                    <Link href="/dashboard/settings" className="flex items-center gap-3 px-3 py-2.5 cursor-pointer rounded-xl hover:bg-muted transition-colors duration-150">
                                         <Settings className="h-4 w-4 text-muted-foreground" />
-                                        <span className="text-sm">Settings</span>
+                                        <span className="text-sm font-medium">Settings</span>
                                     </Link>
                                 </DropdownMenuItem>
                                 <DropdownMenuItem
                                     onClick={handleSignOut}
-                                    className="flex items-center gap-2 px-3 py-2 cursor-pointer rounded-lg text-destructive hover:bg-destructive/5 transition-colors duration-150"
+                                    className="flex items-center gap-3 px-3 py-2.5 cursor-pointer rounded-xl text-destructive hover:bg-destructive/10 transition-colors duration-150"
                                 >
                                     <LogOut className="h-4 w-4" />
-                                    <span className="text-sm">Sign Out</span>
+                                    <span className="text-sm font-bold">Sign Out</span>
                                 </DropdownMenuItem>
                             </DropdownMenuContent>
                         </DropdownMenu>

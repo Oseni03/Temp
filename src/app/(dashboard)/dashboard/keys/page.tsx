@@ -31,7 +31,7 @@ export default async function ApiKeysPage() {
             <header className="flex flex-col gap-1">
                 <h1 className="text-2xl font-bold tracking-tight text-foreground">API Management</h1>
                 <p className="text-sm text-muted-foreground font-light">
-                    Manage your access tokens for the Temp verification service.
+                    Manage your access tokens for the TempTrap verification service.
                 </p>
             </header>
 
