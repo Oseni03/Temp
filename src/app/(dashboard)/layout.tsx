@@ -42,18 +42,20 @@ export default function DashboardLayout({
             <div className="flex min-h-screen bg-background text-foreground antialiased w-full">
                 <AppSidebar />
                 <SidebarInset className="flex flex-col min-w-0 bg-background">
-                    <header className="flex h-14 items-center gap-4 px-6 border-b border-border bg-background sticky top-0 z-10">
+                    <header className="flex h-14 items-center gap-3 px-6 border-b border-border/60 bg-background/90 backdrop-blur-md sticky top-0 z-10">
                         <SidebarTrigger className="-ml-1 text-muted-foreground hover:text-foreground transition-colors" />
-                        <Separator orientation="vertical" className="mr-2 h-4 bg-border/50" />
-                        <div className="flex items-center gap-2">
-                            <span className="text-xs font-medium text-muted-foreground uppercase tracking-widest px-1">
-                                {pathname.split('/').filter(Boolean).slice(0, -1).join(' / ') || "App"}
+                        <Separator orientation="vertical" className="h-4 bg-border/60" />
+                        <nav className="flex items-center gap-1.5 text-sm">
+                            <span className="text-[11px] font-medium text-muted-foreground/60 uppercase tracking-[0.15em]">
+                                {pathname.split('/').filter(Boolean).slice(0, -1).map(s => s.charAt(0).toUpperCase() + s.slice(1)).join(' / ') || "App"}
                             </span>
-                            <span className="text-muted-foreground font-light">/</span>
-                            <h2 className="text-sm font-semibold tracking-tight text-foreground">
-                                {NAV_ITEMS.find(i => i.href === pathname)?.name || pathname.split('/').pop()?.replace(/-/g, ' ') || "Dashboard"}
+                            <span className="text-border font-light select-none">/</span>
+                            <h2 className="text-sm font-semibold text-foreground tracking-tight">
+                                {NAV_ITEMS.find(i => i.href === pathname)?.name ||
+                                    pathname.split('/').pop()?.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) ||
+                                    "Dashboard"}
                             </h2>
-                        </div>
+                        </nav>
                     </header>
                     <main className="flex-1 p-8 lg:p-12 overflow-y-auto">
                         <div className="max-w-5xl mx-auto h-full space-y-8">
