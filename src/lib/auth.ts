@@ -7,6 +7,7 @@ import { nextCookies } from "better-auth/next-js";
 import { createOrganization } from "@/server/organizations";
 import { resend } from "./resend";
 import OrganizationInvitationEmail from "@/components/emails/invitation-email";
+import { ac, adminRole, memberRole, ownerRole } from "@/server/permissions";
 
 export const auth = betterAuth({
     database: prismaAdapter(prisma, {
@@ -35,9 +36,11 @@ export const auth = betterAuth({
                 timeWindow: 1000 * 60 * 1, // 1 minute
                 maxRequests: 10, // 10 requests per minute
             },
-            references: "user",
+            references: "organization",
         }),
         organization({
+            ac,
+            roles: { owner: ownerRole, admin: adminRole, member: memberRole },
             sendInvitationEmail: async (data) => {
                 const toEmail = data.email;
                 const orgName = data.organization.name;

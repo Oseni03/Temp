@@ -3,6 +3,7 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/db";
 import { ApiKeyManager } from "@/components/dashboard/api-key-manager";
+import { ApiKey } from "@better-auth/api-key";
 
 export default async function ApiKeysPage() {
     const session = await auth.api.getSession({
@@ -13,10 +14,16 @@ export default async function ApiKeysPage() {
         redirect("/sign-in");
     }
 
-    const apiKeys = await prisma.apikey.findMany({
-        where: { userId: session.user.id },
-        orderBy: { createdAt: "desc" },
-    });
+    let apiKeys: ApiKey[]
+
+    if (session.session.activeOrganizationId) {
+        apiKeys = await prisma.apikey.findMany({
+            where: { referenceId: session.session.activeOrganizationId },
+            orderBy: { createdAt: "desc" },
+        }) as ApiKey[]
+    } else {
+        apiKeys = []
+    }
 
     // Cast Prisma Date to string as needed for JS object transfer (though BetterAuth types might handle it)
     const formattedKeys = apiKeys.map((key) => ({

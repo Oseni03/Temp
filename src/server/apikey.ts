@@ -8,15 +8,18 @@ export async function createApiKey(name: string) {
         headers: await headers(),
     });
 
-    if (!session?.user.id) {
+    if (!session?.user.id || !session.session.activeOrganizationId) {
         throw new Error("User not authenticated");
     }
+
     const data = await auth.api.createApiKey({
         body: {
             name,
             userId: session.user.id,
             organizationId: session.session.activeOrganizationId,
         },
+        headers: await headers(), // ← add this
     });
+
     return data;
 }
