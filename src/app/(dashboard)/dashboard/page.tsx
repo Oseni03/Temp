@@ -18,11 +18,11 @@ import { VerificationCharts } from "@/components/dashboard/verification-charts";
 import Link from "next/link";
 import { getDashboardData } from "@/server/dashboard";
 
-async function getRecentActivity(userId: string) {
+async function getRecentActivity(organizationId: string) {
     const recentActivity = await prisma.usageLog.findMany({
         where: {
             apiKey: {
-                userId
+                referenceId: organizationId
             }
         },
         take: 5,
@@ -40,12 +40,12 @@ export default async function DashboardPage() {
         headers: await headers(),
     });
 
-    if (!session) {
+    if (!session || !session.session.activeOrganizationId) {
         redirect("/sign-in");
     }
 
-    const [ { recentActivity }, dashboardData ] = await Promise.all([
-        getRecentActivity(session.user.id),
+    const [{ recentActivity }, dashboardData] = await Promise.all([
+        getRecentActivity(session.session.activeOrganizationId),
         getDashboardData(),
     ]);
 
@@ -64,9 +64,9 @@ export default async function DashboardPage() {
 
             <UsageStats stats={dashboardData.stats} />
 
-            <VerificationCharts 
-                chartData={dashboardData.chartData} 
-                distribution={dashboardData.distribution} 
+            <VerificationCharts
+                chartData={dashboardData.chartData}
+                distribution={dashboardData.distribution}
             />
 
             <Card className="border-border/50 bg-background/50 backdrop-blur-xl rounded-3xl overflow-hidden shadow-sm">

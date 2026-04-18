@@ -10,59 +10,60 @@ import { Loader2, CreditCard, Sparkles } from "lucide-react";
 export default function BillingPage() {
     const { data: session } = authClient.useSession();
     const organizationId = session?.session.activeOrganizationId;
-    
+
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const [subscriptions, setSubscriptions] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
     const [checkoutLoading, setCheckoutLoading] = useState(false);
     const [portalLoading, setPortalLoading] = useState(false);
 
-    useEffect(() => {
-        if (!organizationId) {
-            setLoading(false);
-            return;
-        }
+    // useEffect(() => {
+    //     if (!organizationId) {
+    //         setLoading(false);
+    //         return;
+    //     }
 
-        async function fetchSubscriptions() {
-            try {
-                // Fetch active subscriptions for the current organization
-                const response = await authClient.customer.subscriptions.list({
-                    query: { 
-                        page: 1, 
-                        limit: 10, 
-                        active: true, 
-                        // Use assertion because type might not be fully inferred
-                        ...({ referenceId: organizationId } as any) 
-                    }
-                });
-                
-                if (response.data) {
-                    setSubscriptions(response.data);
-                }
-            } catch (err) {
-                console.error("Failed to fetch subscriptions", err);
-                toast.error("Failed to load billing details");
-            } finally {
-                setLoading(false);
-            }
-        }
+    //     async function fetchSubscriptions() {
+    //         try {
+    //             // Fetch active subscriptions for the current organization
+    //             const response = await authClient.customer.subscriptions.list({
+    //                 query: { 
+    //                     page: 1, 
+    //                     limit: 10, 
+    //                     active: true, 
+    //                     // Use assertion because type might not be fully inferred
+    //                     ...({ referenceId: organizationId } as any) 
+    //                 }
+    //             });
 
-        fetchSubscriptions();
-    }, [organizationId]);
+    //             if (response.data) {
+    //                 setSubscriptions(response.data);
+    //             }
+    //         } catch (err) {
+    //             console.error("Failed to fetch subscriptions", err);
+    //             toast.error("Failed to load billing details");
+    //         } finally {
+    //             setLoading(false);
+    //         }
+    //     }
+
+    //     fetchSubscriptions();
+    // }, [organizationId]);
 
     const handleCheckout = async () => {
         if (!organizationId) {
             toast.error("No active project");
             return;
         }
-        
+
         setCheckoutLoading(true);
         try {
-            await authClient.checkout({
-                slug: "pro", 
-                // Pass organization context for B2B billing
-                ...({ referenceId: organizationId } as any)
-            });
+            console.log("Coming soon...")
+            // await authClient.checkout({
+            //     slug: "pro", 
+            //     // Pass organization context for B2B billing
+            //     ...({ referenceId: organizationId } as any)
+            // });
         } catch (err) {
             console.error("Checkout failed:", err);
             toast.error("Failed to start checkout");
@@ -73,7 +74,8 @@ export default function BillingPage() {
     const handlePortal = async () => {
         setPortalLoading(true);
         try {
-            await authClient.customer.portal();
+            console.log("Coming soon...")
+            // await authClient.customer.portal();
         } catch (err) {
             console.error("Portal redirect failed:", err);
             toast.error("Failed to open billing portal");
@@ -116,8 +118,8 @@ export default function BillingPage() {
                         )}
                     </CardTitle>
                     <CardDescription>
-                        {hasActiveSubscription 
-                            ? "Your project is currently on the Pro plan with access to all premium features." 
+                        {hasActiveSubscription
+                            ? "Your project is currently on the Pro plan with access to all premium features."
                             : "Upgrade to the Pro plan to unlock advanced features, more api keys and premium support."}
                     </CardDescription>
                 </CardHeader>
@@ -144,17 +146,17 @@ export default function BillingPage() {
                 </CardContent>
                 <CardFooter className="flex gap-4">
                     {!hasActiveSubscription ? (
-                        <Button 
-                            onClick={handleCheckout} 
+                        <Button
+                            onClick={handleCheckout}
                             disabled={checkoutLoading || !organizationId}
                         >
                             {checkoutLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                             Upgrade to Pro
                         </Button>
                     ) : (
-                        <Button 
+                        <Button
                             variant="outline"
-                            onClick={handlePortal} 
+                            onClick={handlePortal}
                             disabled={portalLoading}
                         >
                             {portalLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
