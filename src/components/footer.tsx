@@ -35,15 +35,27 @@ export function Footer() {
 						{[
 							{
 								title: "Product",
-								links: ["Features", "API Docs", "Pricing"],
+								links: [
+									{ label: "Features", href: "#" },
+									{ label: "API Docs", href: "/docs" },
+									{ label: "Pricing", href: "#" },
+								],
 							},
 							{
 								title: "Company",
-								links: ["About", "Privacy", "Terms"],
+								links: [
+									{ label: "About", href: "/about" },
+									{ label: "Privacy", href: "/privacy" },
+									{ label: "Terms", href: "/terms" },
+								],
 							},
 							{
 								title: "Social",
-								links: ["X (Twitter)", "GitHub", "LinkedIn"],
+								links: [
+									{ label: "X (Twitter)", href: "#" },
+									{ label: "GitHub", href: "#" },
+									{ label: "LinkedIn", href: "#" },
+								],
 							},
 						].map((group) => (
 							<div key={group.title} className="space-y-6">
@@ -51,13 +63,13 @@ export function Footer() {
 									{group.title}
 								</h4>
 								<ul className="space-y-3">
-									{group.links.map((l) => (
-										<li key={l}>
+									{group.links.map((item) => (
+										<li key={item.label}>
 											<Link
-												href="#"
+												href={item.href}
 												className="text-sm font-light text-muted-foreground hover:text-foreground transition-all"
 											>
-												{l}
+												{item.label}
 											</Link>
 										</li>
 									))}
