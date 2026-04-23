@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { authClient } from "@/lib/auth-client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -67,7 +68,7 @@ export default function SignInPage() {
                 {/* Top — logo */}
                 <div className="relative z-10 flex items-center gap-2.5">
                     <div className="h-7 w-7 rounded-lg bg-background flex items-center justify-center">
-                        <ShieldCheck className="h-4 w-4 text-foreground" />
+                        <Image src="/logo.png" alt="TempTrap Logo" width={16} height={16} className="h-4 w-4" />
                     </div>
                     <span className="text-background font-semibold tracking-tight text-sm">TempTrap</span>
                 </div>
@@ -115,7 +116,7 @@ export default function SignInPage() {
                 {/* Mobile logo */}
                 <div className="lg:hidden mb-8 flex items-center gap-2.5">
                     <div className="h-7 w-7 rounded-lg bg-foreground flex items-center justify-center">
-                        <ShieldCheck className="h-4 w-4 text-background" />
+                        <Image src="/logo.png" alt="TempTrap Logo" width={16} height={16} className="h-4 w-4" />
                     </div>
                     <span className="font-semibold tracking-tight text-sm">TempTrap</span>
                 </div>

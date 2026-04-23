@@ -1,6 +1,6 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { ShieldCheck } from "lucide-react";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { SignOutButton } from "./auth-buttons";
@@ -15,8 +15,8 @@ export async function Header() {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex h-16 items-center justify-between">
                     <Link href="/" className="flex items-center gap-2">
-                        <ShieldCheck className="h-6 w-6 text-foreground" />
-                        <span className="text-xl font-bold tracking-tight font-heading">Temp</span>
+                        <Image src="/logo.png" alt="TempTrap Logo" width={24} height={24} className="h-6 w-6" />
+                        <span className="text-xl font-bold tracking-tight font-heading">TempTrap</span>
                     </Link>
                     <nav className="hidden md:flex items-center gap-8">
                         <Link href="#features" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Features</Link>

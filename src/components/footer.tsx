@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ShieldCheck } from "lucide-react";
+import Image from "next/image";
 
 export function Footer() {
     return (
@@ -8,7 +8,7 @@ export function Footer() {
                 <div className="flex flex-col md:flex-row justify-between items-start gap-20">
                     <div className="space-y-8 flex-1">
                         <div className="flex items-center gap-2">
-                            <ShieldCheck className="h-6 w-6" />
+                            <Image src="/logo.png" alt="TempTrap Logo" width={24} height={24} className="h-6 w-6" />
                             <span className="text-2xl font-bold tracking-tight">TempTrap</span>
                         </div>
                         <p className="text-muted-foreground font-light leading-relaxed max-w-sm">
